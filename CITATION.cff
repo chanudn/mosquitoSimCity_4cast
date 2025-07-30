@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Yasanayake"
+  given-names: "Chanud"
+  orcid: "https://orcid.org/0000-0003-1060-0061"
+- family-names: "Zaitchik"
+  given-names: "Benjamin"
+  orcid: "https://orcid.org/0000-0002-0698-0658"
+- family-names: "Gnanadesikan"
+  given-names: "Anand"
+  orcid: "https://orcid.org/0000-0001-5784-1116"
+- family-names: "Gardner"
+  given-names: "Lauren"
+  orcid: "https://orcid.org/0000-0003-1083-3850"
+- family-names: "Shet"
+  given-names: "Anita"
+  orcid: "https://orcid.org/0000-0002-7204-8164"
+- family-names: "Kansara"
+  given-names: "Prakrut"
+- family-names: "Fernando"
+  given-names: "LakKumar"
+  orcid: "https://orcid.org/0000-0001-8645-3497"
+title: "mosquitoSimCity_4cast"
+version: 1.0.0
+doi: TBD
+date-released: 2025-07-29
+url: "https://github.com/chanudn/mosquitoSimCity_4cast"
