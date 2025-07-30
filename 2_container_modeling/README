@@ -1,0 +1,7 @@
+Welcome to WHATCH'EM
+
+- Compile the source code in the src/ directory.  Try either of the compile scripts (for gfortran or pgi), or modify one of these for another compiler.
+- Make sure container.exe is linked into the base directory, or the correct location is specified in the run_container.pl driver script.
+- Either copy or link the input files into the input/directory.  For the provided example, there are input files with optional variables ground temperature and cloud fraction ("all_data"), without ground temperature ("wo_tsoil"), without cloud fraction ("wo_clouds"), and without either ("wo_clouds_tsoil").  Make sure the corresponding flags are specified correctly in run_container.pl.  
+- Run the program by executing run_container.pl.  
+- If plots are desired, NCL must be installed.

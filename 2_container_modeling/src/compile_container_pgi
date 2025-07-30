@@ -1,0 +1,4 @@
+rm container.exe                                                                                                                                                                           
+pgfortran -c container_mod.f90                                                                                                                                           
+pgfortran -o container.exe container_mod.o container_main.f90
+rm *.o *.mod

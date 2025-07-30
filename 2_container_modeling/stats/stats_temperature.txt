@@ -1,0 +1,2 @@
+LOC-TSPAN                      CONTAINER  REFL            SHADE      TMEAN  TMAX   TMIN   CMEAN  CMAX   CMIN   TAMEAN EVAP  
+GEOS_lead0_ens5-NuwaraEliya-2020120100_2020123123  Bucket     Gray            HalfShade  13.82  22.99  6.43   14.42  23.08  7.83   14.01  0.2588

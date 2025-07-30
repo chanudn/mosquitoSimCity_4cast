@@ -1,0 +1,4 @@
+rm container.exe                                                                                                                                                                           
+gfortran -c -ffree-line-length-none container_mod.f90                                                                                                                                           
+gfortran -o container.exe -ffree-line-length-none container_mod.o container_main.f90
+rm *.o *.mod

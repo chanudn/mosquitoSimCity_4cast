@@ -1,0 +1,36 @@
+
+WHATCH'EM requires two Perl modules to be installed (POSIX and Statistics::Descriptive).
+Can't install them directly because I don't have admin permissions, so need to install them locally in my home directory instead.
+
+  Step 1: Install local::lib in home directory.
+    https://metacpan.org/pod/local::lib#The-bootstrapping-technique
+
+    See steps in url above.
+
+  Step 2: Install modules.
+    https://metacpan.org/pod/local::lib#SYNOPSIS
+
+    perl -MCPAN -Mlocal::lib -e 'CPAN::install(POSIX)'
+    perl -MCPAN -Mlocal::lib -e 'CPAN::install(Statistics::Descriptive)'
+
+
+Edited run_container.pl.
+  - changed $path
+
+Added new environmental variable CSM_SCRIPTS. This is used by all the WHATCH'EM ncl plotting files to find certain plotting scripts.
+CSM_SCRIPTS="/home/local/WIN/cyasana1/miniconda3/envs/ncl_stable/lib/ncarg/nclscripts/csm"; export CSM_SCRIPTS;
+
+Downloaded Visual Studio Code extensions for previewing .ps images (the output of the WHATCH'EM ncl plotting scripts).
+ - PostScript Language v1.0.1 (mxschmitt)
+    - needed for the other extension to work
+ - PostScript Preview v0.4.2 (Ahnaf An Nafee)
+    - adds preview image button to .ps file (next to split window button)
+
+NOTE:
+For some reason run_container.pl can't find the locally installed packages (POSIX and Statistics::Descriptive in local::lib) 
+unless I rerun the .bashrc file every single time I open a new terminal.
+So, to get run_container.pl to run properly, I need to first run the following code...
+    > . ~/.bashrc                (so that the packages will be found)
+    > conda activate ncl_stable  (so that the ncl plotting will work)
+... and then do
+    > perl run_container.pl
