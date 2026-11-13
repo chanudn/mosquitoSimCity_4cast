@@ -13,16 +13,16 @@ authors:
 - family-names: "Gardner"
   given-names: "Lauren"
   orcid: "https://orcid.org/0000-0003-1083-3850"
-- family-names: "Shet"
-  given-names: "Anita"
-  orcid: "https://orcid.org/0000-0002-7204-8164"
 - family-names: "Kansara"
   given-names: "Prakrut"
 - family-names: "Fernando"
   given-names: "LakKumar"
   orcid: "https://orcid.org/0000-0001-8645-3497"
+- family-names: "Shet"
+  given-names: "Anita"
+  orcid: "https://orcid.org/0000-0002-7204-8164"
 title: "mosquitoSimCity_4cast"
-version: 1.0.0
-doi: TBD
-date-released: 2025-07-29
+version: 1.1.0
+doi: 10.5281/zenodo.16593887
+date-released: 2026-11-13
 url: "https://github.com/chanudn/mosquitoSimCity_4cast"
