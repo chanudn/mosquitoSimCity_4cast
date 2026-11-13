@@ -625,6 +625,13 @@ def save_monRecord_vectorPop(dataSrc, loc, year, month, intv, initDay, initEggs,
 
 
 
+if True:
+    T = np.linspace(0, 100, 1000000+1)
+    r_E = [r for r in calc_devRate(T, "Eggs")]
+    r_L = [r for r in calc_devRate(T, "Larvae")]
+    r_P = [r for r in calc_devRate(T, "Pupae")]
+    T_maxes = [T[np.argmax(r_E)], T[np.argmax(r_L)], T[np.argmax(r_P)]]
+    print(T_maxes)
 
 
 
@@ -633,18 +640,20 @@ def save_monRecord_vectorPop(dataSrc, loc, year, month, intv, initDay, initEggs,
 # create text files of each month of daily data on pop sizes, dev rates, survival factors, and 
 # associated variables (TW_min, TW_max, TW, WH, TA, VPD)
 # This code uses the temp-based survival curves from Focks et al. 1993
-if True:
-    dataSrcs   = ['GEOS'] #["MERRA_IMERG", "GEOS"]
+if False:
+
+    dataSrcs   = ['MERRA_IMERG', 'GEOS']
     lead_times = [0]           # only relevant for GEOS
     ens_nums   = range(1, 5+1) # only relevant for GEOS
-    locs       = ["Negombo", "Jaffna", "NuwaraEliya"]
+    locs       = ['Negombo', 'Jaffna', 'NuwaraEliya']
     years      = range(2001, 2020+1)
     months     = range(1, 12+1)
-    intv       = "intv00"
+    intv       = 'intv00'
     initDays   = range(1, 7+1)
     initEggs   = 1000
     initLarvae = 1000
     initPupae  = 1000
+
     for dataSrc in dataSrcs:
         print(f'{dataSrc}')
         for loc in locs:
@@ -673,6 +682,10 @@ if True:
                         for initDay in initDays:
                             print(f'     initDay: {initDay}')
                             save_monRecord_vectorPop(dataSrc, loc, year, month, intv, initDay, initEggs, initLarvae, initPupae)
+
+
+
+
 
 
 
