@@ -15,8 +15,9 @@ import os
 sys.path.append('/home/local/WIN/cyasana1/Code/project_whatchem/whatchem-2.1_CNY_4cast/0_constants')
 from CONST_FILE_DIR import (DIR_GEOS, FILE_GEOS_PREFIX,
                             PATH_MERRA_T, PATH_MERRA_TSOIL, PATH_MERRA_RH, PATH_MERRA_LC, PATH_MERRA_MC, PATH_MERRA_HC, 
-                            PATH_IMERG_PRECIP, PATH_IMERG_PRECIP_NEGOMBO_BIASCORRECTED, PATH_IMERG_PRECIP_JAFFNA_BIASCORRECTED, PATH_IMERG_PRECIP_NUWARAELIYA_BIASCORRECTED, 
-                            PATH_MERRA_T_NUWARAELIYA_BIASCORRECTED, PATH_MERRA_TSOIL_NUWARAELIYA_BIASCORRECTED)
+                            PATH_IMERG_PRECIP, PATH_IMERG_PRECIP_NEGOMBO_BIASCORRECTED, PATH_IMERG_PRECIP_JAFFNA_BIASCORRECTED, PATH_IMERG_PRECIP_NUWARAELIYA_BIASCORRECTED,
+                            PATH_MERRA_T_NEGOMBO_BIASCORRECTED, PATH_MERRA_T_JAFFNA_BIASCORRECTED, PATH_MERRA_T_NUWARAELIYA_BIASCORRECTED,
+                            PATH_MERRA_TSOIL_NEGOMBO_BIASCORRECTED, PATH_MERRA_TSOIL_JAFFNA_BIASCORRECTED, PATH_MERRA_TSOIL_NUWARAELIYA_BIASCORRECTED)
 
 
 # ********************************************************************************************************
@@ -116,15 +117,23 @@ def extract_data_to_df(dataSrc, loc, t_start, t_end, lead_time=None, ens_num=Non
     data_dict = {
         'T':      {'MERRA_IMERG': {'varName': 'T2M', 
                                    'fpath'  : {'default': PATH_MERRA_T, 
+                                               'Negombo_bc':     PATH_MERRA_T_NEGOMBO_BIASCORRECTED,
+                                               'Jaffna_bc':      PATH_MERRA_T_JAFFNA_BIASCORRECTED,
                                                'NuwaraEliya_bc': PATH_MERRA_T_NUWARAELIYA_BIASCORRECTED}},
                    'GEOS':        {'varName': 'T2M', 
                                    'fpath'  : {'default': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_T2M.nc'),
+                                               'Negombo_bc':     os.path.join(DIR_GEOS, f'{fname_GEOS_base}_T2M_Negombo_biasCorrected.nc'),
+                                               'Jaffna_bc':      os.path.join(DIR_GEOS, f'{fname_GEOS_base}_T2M_Jaffna_biasCorrected.nc'),
                                                'NuwaraEliya_bc': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_T2M_NuwaraEliya_biasCorrected.nc')}}},
         'TSOIL':  {'MERRA_IMERG': {'varName': 'TSOIL1', 
                                    'fpath'  : {'default': PATH_MERRA_TSOIL, 
+                                               'Negombo_bc':     PATH_MERRA_TSOIL_NEGOMBO_BIASCORRECTED,
+                                               'Jaffna_bc':      PATH_MERRA_TSOIL_JAFFNA_BIASCORRECTED,
                                                'NuwaraEliya_bc': PATH_MERRA_TSOIL_NUWARAELIYA_BIASCORRECTED}},
                    'GEOS':        {'varName': 'TS', 
                                    'fpath'  : {'default': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_TS.nc'),
+                                               'Negombo_bc':     os.path.join(DIR_GEOS, f'{fname_GEOS_base}_TS_Negombo_biasCorrected.nc'),
+                                               'Jaffna_bc':      os.path.join(DIR_GEOS, f'{fname_GEOS_base}_TS_Jaffna_biasCorrected.nc'),
                                                'NuwaraEliya_bc': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_TS_NuwaraEliya_biasCorrected.nc')}}},
         'RH':     {'MERRA_IMERG': {'varName': 'RH', 
                                    'fpath'  : {'default': PATH_MERRA_RH}},
@@ -133,45 +142,38 @@ def extract_data_to_df(dataSrc, loc, t_start, t_end, lead_time=None, ens_num=Non
         'LC':     {'MERRA_IMERG': {'varName': 'CLDLOW', 
                                    'fpath'  : {'default': PATH_MERRA_LC}},
                    'GEOS':        {'varName': 'CLDLO', 
-                                   'fpath'  : {'Negombo_est': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDLO_Negombo.nc'),
-                                               'Jaffna_est': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDLO_Jaffna.nc'),
+                                   'fpath'  : {'Negombo_est':     os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDLO_Negombo.nc'),
+                                               'Jaffna_est':      os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDLO_Jaffna.nc'),
                                                'NuwaraEliya_est': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDLO_NuwaraEliya.nc')}}},
         'MC':     {'MERRA_IMERG': {'varName': 'CLDMID', 
                                    'fpath'  : {'default': PATH_MERRA_MC}},
                    'GEOS':        {'varName': 'CLDMD', 
-                                   'fpath'  : {'Negombo_est': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDMD_Negombo.nc'),
-                                               'Jaffna_est': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDMD_Jaffna.nc'),
+                                   'fpath'  : {'Negombo_est':     os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDMD_Negombo.nc'),
+                                               'Jaffna_est':      os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDMD_Jaffna.nc'),
                                                'NuwaraEliya_est': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDMD_NuwaraEliya.nc')}}},
         'HC':     {'MERRA_IMERG': {'varName': 'CLDHGH', 
                                    'fpath'  : {'default': PATH_MERRA_HC}},
                    'GEOS':        {'varName': 'CLDHI', 
-                                   'fpath'  : {'Negombo_est': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDHI_Negombo.nc'),
-                                               'Jaffna_est': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDHI_Jaffna.nc'),
+                                   'fpath'  : {'Negombo_est':     os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDHI_Negombo.nc'),
+                                               'Jaffna_est':      os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDHI_Jaffna.nc'),
                                                'NuwaraEliya_est': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_CLDHI_NuwaraEliya.nc')}}},
         'PRECIP': {'MERRA_IMERG': {'varName': 'precipitationCal', 
                                    'fpath'  : {'default': PATH_IMERG_PRECIP,
-                                               'Negombo_bc': PATH_IMERG_PRECIP_NEGOMBO_BIASCORRECTED,
-                                               'Jaffna_bc': PATH_IMERG_PRECIP_JAFFNA_BIASCORRECTED,
+                                               'Negombo_bc':     PATH_IMERG_PRECIP_NEGOMBO_BIASCORRECTED,
+                                               'Jaffna_bc':      PATH_IMERG_PRECIP_JAFFNA_BIASCORRECTED,
                                                'NuwaraEliya_bc': PATH_IMERG_PRECIP_NUWARAELIYA_BIASCORRECTED}},
                    'GEOS':        {'varName': 'PRECTOT', 
                                    'fpath'  : {'default': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_PRECTOT.nc'),
-                                               'Negombo_bc': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_PRECTOT_Negombo_biasCorrected.nc'),
-                                               'Jaffna_bc': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_PRECTOT_Jaffna_biasCorrected.nc'),
+                                               'Negombo_bc':     os.path.join(DIR_GEOS, f'{fname_GEOS_base}_PRECTOT_Negombo_biasCorrected.nc'),
+                                               'Jaffna_bc':      os.path.join(DIR_GEOS, f'{fname_GEOS_base}_PRECTOT_Jaffna_biasCorrected.nc'),
                                                'NuwaraEliya_bc': os.path.join(DIR_GEOS, f'{fname_GEOS_base}_PRECTOT_NuwaraEliya_biasCorrected.nc')}}}
     }
 
     # Load data
-    if loc == 'Negombo': # for Negombo, load in regular temperatures
-        file_T      = xr.open_dataset(data_dict['T'][dataSrc]['fpath']['default'])
-        file_TSOIL  = xr.open_dataset(data_dict['TSOIL'][dataSrc]['fpath']['default'])
-    elif loc == 'Jaffna': # for Jaffna, load in regular temperatures
-        file_T      = xr.open_dataset(data_dict['T'][dataSrc]['fpath']['default'])
-        file_TSOIL  = xr.open_dataset(data_dict['TSOIL'][dataSrc]['fpath']['default'])
-    elif loc == 'NuwaraEliya': # for Nuwara Eliya, load in bias-corrected temperatures
-        file_T      = xr.open_dataset(data_dict['T'][dataSrc]['fpath'][f'{loc}_bc'])
-        file_TSOIL  = xr.open_dataset(data_dict['TSOIL'][dataSrc]['fpath'][f'{loc}_bc'])
-    file_PRECIP = xr.open_dataset(data_dict['PRECIP'][dataSrc]['fpath'][f'{loc}_bc']) # bias-corrected precip
-    file_RH    = xr.open_dataset(data_dict['RH'][dataSrc]['fpath']['default']) # regular RH
+    file_T      = xr.open_dataset(data_dict['T'][dataSrc]['fpath'][f'{loc}_bc'])       # bias-corrected 2-m air temp
+    file_TSOIL  = xr.open_dataset(data_dict['TSOIL'][dataSrc]['fpath'][f'{loc}_bc'])   # bias-corrected soil temp
+    file_PRECIP = xr.open_dataset(data_dict['PRECIP'][dataSrc]['fpath'][f'{loc}_bc'])  # bias-corrected precip
+    file_RH     = xr.open_dataset(data_dict['RH'][dataSrc]['fpath']['default'])        # regular RH
     if dataSrc == 'GEOS': # estimated cloud cover
         file_LC    = xr.open_dataset(data_dict['LC'][dataSrc]['fpath'][f'{loc}_est'])
         file_MC    = xr.open_dataset(data_dict['MC'][dataSrc]['fpath'][f'{loc}_est'])
@@ -185,15 +187,8 @@ def extract_data_to_df(dataSrc, loc, t_start, t_end, lead_time=None, ens_num=Non
     site_lat, site_lon = get_site_coordinates(loc)
     
     # the bias-corrected data is already subset by location, so we don't need to do anything to those
-    if loc == 'Negombo':
-        site_T      = file_T.sel(lat=site_lat, lon=site_lon, method='nearest')
-        site_TSOIL  = file_TSOIL.sel(lat=site_lat, lon=site_lon, method='nearest')
-    elif loc == 'Jaffna':
-        site_T      = file_T.sel(lat=site_lat, lon=site_lon, method='nearest')
-        site_TSOIL  = file_TSOIL.sel(lat=site_lat, lon=site_lon, method='nearest')
-    elif loc == 'NuwaraEliya':
-        site_T      = file_T
-        site_TSOIL  = file_TSOIL
+    site_T      = file_T
+    site_TSOIL  = file_TSOIL
     site_PRECIP = file_PRECIP
     site_RH     = file_RH.sel(lat=site_lat, lon=site_lon, method='nearest')
     if dataSrc == 'GEOS': # already subset by location

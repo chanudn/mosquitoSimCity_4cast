@@ -4,7 +4,7 @@
 #
 # The IMERG precipitation values don't match the distribution of WMO observed precipitation.
 # This script takes IMERG precipitationCal, subsets the data to each location in turn, 
-# transforms the data  based on a fit of precipitationCal to observed precipitation (WMO), 
+# transforms the data based on a fit of precipitationCal to observed precipitation (WMO), 
 # and saves the results as netcdf files (to be used by createMetInput.py).
 
 # import required packages
@@ -124,38 +124,42 @@ def bias_correct_mainData_byMon(var_obsData_daily, var_mainData_hourly):
     return var_mainData_hourly_bc
 
 
-if True:
-    for city, cityInfo in cities.items():
-        print(f'   {city}')
 
-        # Load observation dataset
-        fPath_in_obsData = os.path.join(fDir_obsData, cityInfo["obs_file"])
-        df_obsData_daily   = load_obsData(fPath_in_obsData)  # in total mm
-        var_obsData_daily = df_obsData_daily[varName_obsData]
 
-        print(f'  Working on {varName_mainData}...')
+## Main script
+#  ***********************************************************************************
 
-        # Load main dataset
-        ds_mainData = xr.open_dataset(fPath_in_mainData)
-        var_mainData_hourly = extract_mainData_prcp(ds_mainData, 'GEOS', varName_mainData, cityInfo["lat"], cityInfo["lon"]) # function converts from kg/m^2/s to total mm
+for city, cityInfo in cities.items():
+    print(f'   {city}')
 
-        # Define path for output data
-        fDir_mainData = os.path.dirname(fPath_in_mainData)
-        fName_mainData = os.path.basename(fPath_in_mainData)
-        fName_mainData_root, fName_mainData_ext = os.path.splitext(fName_mainData)
-        fPath_out_mainData = os.path.join(fDir_mainData, f'{fName_mainData_root}_{city}_biasCorrected{fName_mainData_ext}')
+    # Load observation dataset
+    fPath_in_obsData = os.path.join(fDir_obsData, cityInfo["obs_file"])
+    df_obsData_daily   = load_obsData(fPath_in_obsData)  # in total mm
+    var_obsData_daily = df_obsData_daily[varName_obsData]
 
-        # Do bias correction
-        var_mainData_hourly_bc = bias_correct_mainData_byMon(var_obsData_daily, var_mainData_hourly)
-        # No units conversion needed since we've been working in IMERG units (mm) the whole time
+    print(f'  Working on {varName_mainData}...')
 
-        # Save bias corrected data to new NetCDF files
-        # First turn into xarray dataArray, then Dataset, then save that.
-        da_mainData = ds_mainData[varName_mainData].sel(lat=cityInfo["lat"], lon=cityInfo["lon"], method='nearest')
-        var_bc_da = xr.DataArray(var_mainData_hourly_bc, coords=da_mainData.coords, attrs=da_mainData.attrs)
-        var_bc_ds = xr.Dataset({varName_mainData: var_bc_da})
-        var_bc_ds.to_netcdf(fPath_out_mainData)
+    # Load main dataset
+    ds_mainData = xr.open_dataset(fPath_in_mainData)
+    var_mainData_hourly = extract_mainData_prcp(ds_mainData, 'GEOS', varName_mainData, cityInfo["lat"], cityInfo["lon"]) # function converts from kg/m^2/s to total mm
 
-        # Close original datasets
-        ds_mainData.close()
+    # Define path for output data
+    fDir_mainData = os.path.dirname(fPath_in_mainData)
+    fName_mainData = os.path.basename(fPath_in_mainData)
+    fName_mainData_root, fName_mainData_ext = os.path.splitext(fName_mainData)
+    fPath_out_mainData = os.path.join(fDir_mainData, f'{fName_mainData_root}_{city}_biasCorrected{fName_mainData_ext}')
+
+    # Do bias correction
+    var_mainData_hourly_bc = bias_correct_mainData_byMon(var_obsData_daily, var_mainData_hourly)
+    # No units conversion needed since we've been working in IMERG units (mm) the whole time
+
+    # Save bias corrected data to new NetCDF files
+    # First turn into xarray dataArray, then Dataset, then save that.
+    da_mainData = ds_mainData[varName_mainData].sel(lat=cityInfo["lat"], lon=cityInfo["lon"], method='nearest')
+    var_bc_da = xr.DataArray(var_mainData_hourly_bc, coords=da_mainData.coords, attrs=da_mainData.attrs)
+    var_bc_ds = xr.Dataset({varName_mainData: var_bc_da})
+    var_bc_ds.to_netcdf(fPath_out_mainData)
+
+    # Close original datasets
+    ds_mainData.close()
 
