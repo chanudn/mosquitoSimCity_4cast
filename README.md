@@ -1,2 +1,2 @@
 # mosquitoSimCity_4cast
-Code associated with the journal article "Mechanistic Modeling of Aedes aegypti Mosquito Habitats for Climate-informed Dengue Forecasting—Can We Improve Lead Time While Retaining Predictive Skill?"
+Code associated with the AGU GeoHealth journal article "Can Seasonal Meteorological Forecasts Support Mechanistic Predictions of Aedes aegypti Abundance? Evaluating GEOS-S2S Hindcasts for Climate-Informed Dengue Early Warning"
