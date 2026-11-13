@@ -102,7 +102,7 @@ if (0) {
 
 
 # Input data parameters
-my @dataSrcs   = qw/ GEOS /; #qw/ MERRA_IMERG GEOS /;
+my @dataSrcs   = qw/ MERRA_IMERG GEOS /;
 my @lead_times = (0);
 my @ens_nums   = (1..5);
 my @locs       = qw/ Negombo Jaffna NuwaraEliya /;
